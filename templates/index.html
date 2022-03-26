@@ -1,11 +1,14 @@
 {% load socialaccount %}
 <html>
-<body>
-<h1> Transbient </h1>
-{% if user.is_authenticated %}
-  <p>Welcome, You are logged in as {{ user.username }}</p>
-{% else %}
-  <a href="{% provider_login_url 'google' %}">Login With Google</a>
-{% endif %}
-</body>
+  <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  </head>
+  <body>
+  <h1> Transbient </h1>
+  {% if user.is_authenticated %}
+    <p>Welcome, You are logged in as {{ user.username }}</p>
+  {% else %}
+    <a href="{% provider_login_url 'google' %}">Login With Google</a>
+  {% endif %}
+  </body>
 </html>
