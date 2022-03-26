@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+
 ]
 
 MIDDLEWARE = [
@@ -75,22 +77,10 @@ WSGI_APPLICATION = 'transbient.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-if 'test' in sys.argv:
-    DATABASES = {
+DATABASES = {
         'default':{
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': 'mydatabase'
-        }
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'transbient-db',
-            'USER': 'postgres',
-            'PASSWORD': 'hoohacks2022',
-            'HOST': '34.145.227.188',
-            'PORT':  '5432',
         }
     }
 
