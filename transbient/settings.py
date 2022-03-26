@@ -89,7 +89,7 @@ else:
             'NAME': 'transbient-db',
             'USER': 'postgres',
             'PASSWORD': 'hoohacks2022',
-            'HOST': 'https://console.cloud.google.com/sql/instances/transbient-db/overview',
+            'HOST': '34.145.227.188',
             'PORT':  '5432',
         }
     }
