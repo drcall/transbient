@@ -8,7 +8,7 @@ on:
 
 env:
   DEBUG: ${{ secrets.DEBUG }}
-  SECRET_KEY: ${{ secrets.DJANGO_KEY }}
+  SECRET_KEY: django-insecure-gth#$$gf0l-=9v6le7um+veh3w3d!!3=w^shkwdv^lqg-yjz*s
   DB_NAME: ${{ secrets.DB_NAME }}
   USER: ${{ secrets.USER }}
   PASSWORD: ${{ secrets.PASSWORD }}
