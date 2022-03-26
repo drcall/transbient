@@ -86,11 +86,17 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'transbient-db',
+            'NAME': 'transbient-main',
             'USER': 'postgres',
             'PASSWORD': 'hoohacks2022',
             'HOST': '34.145.227.188',
             'PORT':  '5432',
+            'OPTIONS': {
+                'sslmode': 'verify-ca', #leave this line intact
+                'sslrootcert': 'cert/server-ca.pem',
+                "sslcert": "cert/client-cert.pem",
+                "sslkey": "cert/client-key.pem",
+            }
         }
     }
 
