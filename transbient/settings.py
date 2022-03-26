@@ -170,8 +170,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 try:
     # Configure Django App for Heroku.
-    import django_heroku
-    django_heroku.settings(locals())
+    if 'HEROKU' in os.environ:
+        import django_heroku
+        django_heroku.settings(locals())
 except ImportError:
     found = False
 
