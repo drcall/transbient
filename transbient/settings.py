@@ -98,6 +98,12 @@ else:
             'PASSWORD': env('PASSWORD'),
             'HOST': env('HOST'),
             'PORT':  '5432',
+            'OPTIONS': {
+                'sslmode': 'verify-ca', #leave this line intact
+                'sslrootcert': 'server-ca.pem',
+                "sslcert": env('CERT'),
+                "sslkey": env('KEY'),
+            }
         }
     }
 
