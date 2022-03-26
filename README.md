@@ -1,2 +1,2 @@
-# Transbient - An Ambient Transportation Solution for UVA Students
-Project for Hoo Hacks 2022
+# Transbient - HooHacks 2022
+An ambient transportation solution for UVA students
