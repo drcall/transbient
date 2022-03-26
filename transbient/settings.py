@@ -99,16 +99,10 @@ else:
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': env('DB_NAME'),
-            'USER': 'postgres',
+            'USER': 'nphbcvnqdyiikr',
             'PASSWORD': env('PASSWORD'),
             'HOST': env('HOST'),
             'PORT':  '5432',
-            'OPTIONS': {
-                'sslmode': 'verify-ca', #leave this line intact
-                'sslrootcert': 'transbient/cert/server-ca.pem',
-                "sslcert": env('CERT'),
-                "sslkey": env('KEY'),
-            }
         }
     }
 
