@@ -23,6 +23,7 @@ def etas_to_loc(loc):
     vehicles = dev_data['vehicles']
     for i in range(len(vehicles)):
         vehicles[i]['eta'] = get_eta(vehicles[i]['position'], loc)
+    vehicles.sort(key=lambda k: k['eta'])
     return vehicles
 
 def get_eta(pos1, pos2):
