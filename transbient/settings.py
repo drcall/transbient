@@ -34,12 +34,12 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = ['transbient.herokuapp.com','127.0.0.1', 'localhost']
-
+ALLOWED_HOSTS = ['transbient.herokuapp.com', 'localhost']
 
 # Application definition
 
 INSTALLED_APPS = [
+    'transit.apps.TransitConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -159,19 +159,18 @@ USE_I18N = True
 
 USE_TZ = True
 
-ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
-
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 try:
     # Configure Django App for Heroku.
     if 'HEROKU' in os.environ:
         import django_heroku
+        ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
         django_heroku.settings(locals())
 except ImportError:
     found = False
