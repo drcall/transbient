@@ -8,7 +8,7 @@ on:
 
 env:
   DEBUG: ${{ secrets.DEBUG }}
-  SECRET_KEY: ${{ secrets.SECRET_KEY }}
+  SECRET_KEY: ${{ secrets.DJANGO_KEY }}
   DB_NAME: ${{ secrets.DB_NAME }}
   USER: ${{ secrets.USER }}
   PASSWORD: ${{ secrets.PASSWORD }}
