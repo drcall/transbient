@@ -11,6 +11,7 @@ mydatabase
 *.bak 
 
 .idea/*
+*.DS_Store
 
 # File-based project format
 *.iws
