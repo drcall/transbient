@@ -42,6 +42,15 @@ def get_eta(pos1, pos2):
     eta_str2 = re.compile('\d+ min').search(eta_str)[0]
     return int(eta_str2[:-4])  # number of minutes
 
+def dashboard_view(request):
+    stops = Stop.objects.all().order_by('name')
+
+    for stop in stops:
+        stop.route_str = stop.format_routes()
+        stop.save()
+        
+    return render(request, "transit/dashboard.html", {'stops': stops})
+
 def settings_view(request):
     form = UserSettingsForm()
     return render(request, "transit/settings.html", {'form': form})
@@ -116,7 +125,6 @@ def create_stops():
                 s.routes.add(r)
             except IndexError:
                 continue
-
 
 def create_or_update_vehicles():
     devhub_url = 'https://api.devhub.virginia.edu/v1/transit/vehicles'

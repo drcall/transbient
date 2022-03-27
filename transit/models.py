@@ -18,6 +18,17 @@ class Stop(models.Model):
     lat = models.DecimalField(max_digits=17,decimal_places=15)
     code = models.IntegerField()
     routes = models.ManyToManyField(Route)
+    route_str = models.TextField(default="No routes to display")
+
+    def __str__(self):
+        return str(self.code)
+    
+    def format_routes(self):
+        str = "Routes: "
+        for route in self.routes.all():
+            str += route.long_name.lower().title() + ", "
+
+        return str[:len(str)-2]
 
     def __str__(self):
         return str(self.code)
