@@ -20,7 +20,7 @@ class Stop(models.Model):
     routes = models.ManyToManyField(Route)
 
     def __str__(self):
-        return self.code
+        return str(self.code)
 
 class Vehicle(models.Model):
     id = models.IntegerField(primary_key=True)

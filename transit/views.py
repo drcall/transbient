@@ -78,3 +78,18 @@ def create_routes():
         r = Route(id=route['id'], is_active=route['is_active'], long_name=route['long_name'],
                   short_name=route['short_name'])
         r.save()
+
+def create_stops():
+    devhub_url = 'https://api.devhub.virginia.edu/v1/transit/bus-stops'
+    devhub_data = {'success': False}
+
+    while not devhub_data['success']:
+        devhub_data = requests.get(devhub_url).json()
+
+    for stop in devhub_data['stops']:
+        s = Stop(id=stop['id'],name=stop['name'],lat=stop["position"][0],long=stop["position"][1],code=int(stop["code"]))
+        s.save()
+
+    for route in devhub_data['routes']:
+        continue
+
