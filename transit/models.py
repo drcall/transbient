@@ -34,7 +34,7 @@ class Stop(models.Model):
         return str(self.code)
 
     def __str__(self):
-        return self.code
+        return str(self.code)
 
 class Vehicle(models.Model):
     id = models.IntegerField(primary_key=True)
