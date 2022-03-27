@@ -20,15 +20,13 @@ def etas_to_loc(loc):
     :return: list of vehicles with fields from Devhub API + eta (number of minutes until bus reaches loc)
     '''
 
-    dev_url = 'https://api.devhub.virginia.edu/v1/transit/vehicles'
-    dev_data = {'success': False}
-    while not dev_data['success']:
-        dev_data = requests.get(dev_url).json()
-        print("Got vehicle locations")
-    vehicles = dev_data['vehicles']
-    for i in range(len(vehicles)):
-        vehicles[i]['eta'] = get_eta(vehicles[i]['position'], loc)
-    vehicles.sort(key=lambda k: k['eta'])
+    create_or_update_vehicles()
+    vehicles = []
+    v_set = Vehicle.objects.all()
+    for v in v_set:
+        eta = get_eta((v.lat,v.long),loc)
+        vehicles.append((v,eta))
+    vehicles.sort(key=lambda k: k[1]) # sort by min to max eta
     return vehicles
 
 def get_eta(pos1, pos2):
@@ -103,3 +101,33 @@ def create_stops():
                 continue
 
 
+def create_or_update_vehicles():
+    devhub_url = 'https://api.devhub.virginia.edu/v1/transit/vehicles'
+    devhub_data = {'success': False}
+
+    while not devhub_data['success']:
+        devhub_data = requests.get(devhub_url).json()
+
+    for veh in devhub_data['vehicles']:
+        veh_set = Vehicle.objects.filter(id=veh['id'])
+        lat = Decimal("%.15f" % veh["position"][0])
+        long = Decimal("%.15f" % veh["position"][1])
+        r = Route.objects.filter(id=veh['route_id'])[0]
+        if len(veh_set) == 0:
+            v = Vehicle(id=veh['id'],call_name=veh['call_name'],long=long,lat=lat,service_status=veh['service_status'],route_id=r)
+            v.save()
+        else:
+            v.lat = lat
+            v.long = long
+            v.route_id = r
+            v.service_status = veh['service_status']
+
+def buses_near_stop(stop_id):
+    s = Stop.objects.filter(id=stop_id)[0]
+    vehicles = etas_to_loc((s.lat,s.long))
+    route_vehicles = []
+    routes = s.routes.all()
+    for v,eta in vehicles:
+        if v.route_id in routes:
+            route_vehicles.append((v,eta))
+    return vehicles
