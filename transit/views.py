@@ -1,5 +1,7 @@
 from django.shortcuts import render
 import requests, re, os
+from .models import UserSettings, UserSettingsForm
+from django.http import HttpResponseRedirect
 
 def get_long_lat():
     dev_url = "https://www.googleapis.com/geolocation/v1/geolocate?"
@@ -35,3 +37,24 @@ def get_eta(pos1, pos2):
     eta_str = google_data['rows'][0]['elements'][0]['duration']['text']
     eta_str2 = re.compile('\d+ min').search(eta_str)[0]
     return int(eta_str2[:-4])  # number of minutes
+
+def settings_view(request):
+    form = UserSettingsForm()
+    return render(request, "transit/settings.html", {'form': form})
+
+def change_settings(request):
+    if request.method == 'POST':
+        form = UserSettingsForm(request.POST)
+        if form.is_valid():
+            existing = UserSettings.objects.filter(user=request.user)
+            for item in existing:
+                item.delete()
+            p_number = form.cleaned_data.get('phone')
+            min_eta = form.cleaned_data.get('start')
+
+            profile = UserSettings(user = request.user, phone = p_number, start = min_eta)
+            profile.save()
+            return HttpResponseRedirect('/transit')
+        else:
+            form = UserSettingsForm()
+    return render(request, 'transit/settings.html', {'form': form, 'error_message': 'Something went wrong.'})

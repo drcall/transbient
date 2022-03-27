@@ -1,0 +1,36 @@
+{% extends 'transit/base.html' %}
+
+{% load static %}
+{% block content %}
+<div class = "content">
+    <div class = "container-fluid mt-2" style = "min-height: 80vh;">
+        <h2 class="text-center text-dark pt-2">App Settings</h2>
+        {% if error_message%}
+            <div class="alert alert-danger mx-auto w-25 text-center" role="alert">
+                {{error_message}}
+            </div>
+        {% endif %}
+        <form action = "{% url 'change_settings' %}" enctype = "multipart/form-data" class = "container-fluid" method = "post">
+            {% csrf_token %}
+            <p class = "text-center" style = "color: #666666;">Phone Number</p>
+            <div class = "row form-group flex justify-content-center">
+                {{form.phone}}
+            </div>
+            <p class = "text-center" style = "color: #666666;">Time Until Bus Arrives</p>
+            <div class = "row form-group flex justify-content-center">
+                {{form.start}}
+                <datalist id="tickmarks">
+                    <option value="2" label="2"></option>
+                    <option value="4" label="4"></option>
+                    <option value="6" label="6"></option>
+                    <option value="8" label="8"></option>
+                    <option value="10" label="10"></option>
+                </datalist>
+            </div>
+            <div class = "row form-group">
+                <input class="mx-auto mt-2 btn btn-primary text-white" type="submit" value="Confirm">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
