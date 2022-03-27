@@ -90,6 +90,19 @@ def create_routes():
                   short_name=route['short_name'])
         r.save()
 
+def update_stop_locations():
+    devhub_url = 'https://api.devhub.virginia.edu/v1/transit/bus-stops'
+    devhub_data = {'success': False}
+    while not devhub_data['success']:
+        devhub_data = requests.get(devhub_url).json()
+    for stop in devhub_data['stops']:
+        lat = Decimal("%.15f" % stop["position"][0])
+        long = Decimal("%.15f" % stop["position"][1])
+        s = Stop.objects.filter(id=stop['id'])[0]
+        s.lat = lat
+        s.long = long
+        s.save()
+
 def create_stops():
     devhub_url = 'https://api.devhub.virginia.edu/v1/transit/bus-stops'
     devhub_data = {'success': False}
@@ -102,6 +115,7 @@ def create_stops():
         long = Decimal("%.15f" % stop["position"][1])
         s = Stop(id=stop['id'],name=stop['name'],lat=lat,long=long,code=int(stop["code"]))
         s.save()
+
 
     for route in devhub_data['routes']:
         r = Route.objects.filter(id=route['id'])[0]
@@ -134,6 +148,7 @@ def create_or_update_vehicles():
             v.long = long
             v.route_id = r
             v.service_status = veh['service_status']
+            v.save()
 
 def buses_near_stop(stop_id):
     s = Stop.objects.filter(id=stop_id)[0]
