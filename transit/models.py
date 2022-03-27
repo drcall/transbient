@@ -39,6 +39,9 @@ class Stop(models.Model):
     def __str__(self):
         return str(self.code)
 
+    def __str__(self):
+        return str(self.code)
+
 class Vehicle(models.Model):
     id = models.IntegerField(primary_key=True)
     call_name = models.CharField(max_length=20)
