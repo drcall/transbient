@@ -1,0 +1,53 @@
+{% load static %}
+{% load socialaccount %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="stylesheet" href= "{% static 'css/override.css' %}" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600&display=swap" rel="stylesheet">
+        <title>Transbient - Application</title>
+    </head>
+    <body class = "d-flex flex-column min-vh-100 bg-light">
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #232D4B;">
+                <a class="navbar-brand text-white" style = "font-family: 'Chakra Petch'; color: white;" href="#">transbient</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarText">
+                    <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link text-white" href="#">Current ETAs<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Favorited Stops</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Settings</a>
+                    </li>
+                    </ul>
+                    {% if user.is_authenticated %}
+                        {% if user.socialaccount_set.all.0.get_avatar_url %}
+                        <img id = "navbar-photo" style = "width: 40px; height: auto; border-radius: 100%; border: 3px solid #e57200;" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
+                        {% endif %}
+                        <span class="navbar-text text-white pl-3" style="text-transform: capitalize">
+                        Hello, {{ user.username }}!
+                        </span>
+                    {% else %}
+                        <span>
+                            <a href = "{% provider_login_url 'google' %}" type = "button" class = "btn btn-primary mx-auto text-white">Login with Google</a>
+                        </span>
+                    {% endif %}
+                </div>
+            </nav>
+        </header>
+        {% block content %}
+        {% endblock %}
+        <footer class = "footer mt-auto pt-4">
+            <p class = "text-muted text-center">© Denis Callinan & Bejoy Sen - HooHacks 2022</p>
+        </footer>
+    </body>
+</html>
