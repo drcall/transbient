@@ -126,7 +126,6 @@ def create_stops():
             except IndexError:
                 continue
 
-
 def create_or_update_vehicles():
     devhub_url = 'https://api.devhub.virginia.edu/v1/transit/vehicles'
     devhub_data = {'success': False}
