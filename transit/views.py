@@ -2,6 +2,8 @@ from django.shortcuts import render
 import requests, re, os
 from .models import UserSettings, UserSettingsForm
 from django.http import HttpResponseRedirect
+from twilio.rest import Client
+from django.conf import settings
 
 def get_long_lat():
     dev_url = "https://www.googleapis.com/geolocation/v1/geolocate?"
@@ -43,6 +45,7 @@ def settings_view(request):
     return render(request, "transit/settings.html", {'form': form})
 
 def change_settings(request):
+    msg = "You have just added your phone number to your Transbient account! Stay updated on UTS here: https://transbient.herokuapp.com/"
     if request.method == 'POST':
         form = UserSettingsForm(request.POST)
         if form.is_valid():
@@ -54,6 +57,10 @@ def change_settings(request):
 
             profile = UserSettings(user = request.user, phone = p_number, start = min_eta)
             profile.save()
+            client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+            client.messages.create(to=p_number.as_e164,
+                                   from_=settings.TWILIO_NUMBER,
+                                   body=msg)
             return HttpResponseRedirect('/transit')
         else:
             form = UserSettingsForm()
