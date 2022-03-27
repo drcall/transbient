@@ -1,6 +1,6 @@
 from django.shortcuts import render
 import requests, re, os
-from .models import UserSettings, UserSettingsForm
+from .models import UserSettings, UserSettingsForm, Stop
 from django.http import HttpResponseRedirect
 from twilio.rest import Client
 from django.conf import settings
@@ -39,6 +39,11 @@ def get_eta(pos1, pos2):
     eta_str = google_data['rows'][0]['elements'][0]['duration']['text']
     eta_str2 = re.compile('\d+ min').search(eta_str)[0]
     return int(eta_str2[:-4])  # number of minutes
+
+def dashboard_view(request):
+    stops = Stop.objects.all()
+    print(stops)
+    return render(request, "transit/dashboard.html", {'stops': stops})
 
 def settings_view(request):
     form = UserSettingsForm()

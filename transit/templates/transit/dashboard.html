@@ -4,7 +4,27 @@
 {% block content %}
 <div class = "content">
     <div class = "container-fluid mt-2" style = "min-height: 80vh;">
-        
+        <div class = "row">
+            <div class="card mx-auto w-75">
+                <h5 class="card-header">Orange Line & McCormick Rd</h5>
+                <div class="card-body">
+                    <h5 class="card-title">Routes</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                </div>
+            </div>
+        </div>
+        {% for stop in stops %}
+            <div class = "row">
+                <div class="card mx-auto w-75">
+                    <h5 class="card-header">{{ stop.name }}/h5>
+                    <div class="card-body">
+                        <h5 class="card-title">Special title treatment</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
