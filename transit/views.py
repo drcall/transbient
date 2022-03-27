@@ -45,10 +45,12 @@ def settings_view(request):
 def change_settings(request):
     if request.method == 'POST':
         form = UserSettingsForm(request.POST)
-        print(form.is_valid())
         if form.is_valid():
+            existing = UserSettings.objects.filter(user=request.user)
+            for item in existing:
+                item.delete()
             p_number = form.cleaned_data.get('phone')
-            min_eta = form.clean_data.get('start')
+            min_eta = form.cleaned_data.get('start')
 
             profile = UserSettings(user = request.user, phone = p_number, start = min_eta)
             profile.save()
