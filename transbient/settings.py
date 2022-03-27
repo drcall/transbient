@@ -168,7 +168,7 @@ STATICFILES_DIRS = [
     "staticfiles/static/",
 ]
 
-#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 try:
     # Configure Django App for Heroku.
