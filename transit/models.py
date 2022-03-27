@@ -29,15 +29,6 @@ class Stop(models.Model):
             str += route.long_name.lower().title() + ", "
 
         return str[:len(str)-2]
-<<<<<<< HEAD
-
-    def __str__(self):
-        return str(self.code)
-=======
->>>>>>> ed35f18 (Dashboard)
-
-    def __str__(self):
-        return str(self.code)
 
     def __str__(self):
         return str(self.code)
