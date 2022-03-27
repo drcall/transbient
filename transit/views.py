@@ -30,11 +30,14 @@ def etas_to_loc(loc):
     return vehicles
 
 def get_eta(pos1, pos2):
-    source = str(pos1)[1:-1]
-    dest = str(pos2)[1:-1]
+    get_str = lambda k: str(float(k[0]))+','+str(float(k[1]))
+    source = get_str(pos1)
+    dest = get_str(pos2)
     google_url = 'https://maps.googleapis.com/maps/api/distancematrix/json?'
-    google_data = requests.get(
-        google_url + 'origins=' + source + '&destinations=' + dest + '&key=' + os.environ.get("GOOGLE_DISTANCE_MATRIX_API_KEY")).json()
+    real_url = google_url + 'origins=' + source + '&destinations=' + dest + '&key=' + os.environ.get("GOOGLE_DISTANCE_MATRIX_API_KEY")
+    # print(real_url)
+    google_data = requests.get(real_url).json()
+    # print(google_data)
     eta_str = google_data['rows'][0]['elements'][0]['duration']['text']
     eta_str2 = re.compile('\d+ min').search(eta_str)[0]
     return int(eta_str2[:-4])  # number of minutes
@@ -117,6 +120,7 @@ def create_or_update_vehicles():
             v = Vehicle(id=veh['id'],call_name=veh['call_name'],long=long,lat=lat,service_status=veh['service_status'],route_id=r)
             v.save()
         else:
+            v = veh_set[0]
             v.lat = lat
             v.long = long
             v.route_id = r
