@@ -30,6 +30,9 @@ class Stop(models.Model):
 
         return str[:len(str)-2]
 
+    def __str__(self):
+        return self.code
+
 class Vehicle(models.Model):
     id = models.IntegerField(primary_key=True)
     call_name = models.CharField(max_length=20)
