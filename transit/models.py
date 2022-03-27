@@ -8,12 +8,13 @@ from phonenumber_field.modelfields import PhoneNumberField
 class UserSettings(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     phone = PhoneNumberField(null=False, blank=False, unique=True)
-    threshold_eta = models.IntegerField(default=5)
+    start = models.IntegerField(default=5)
 
 class UserSettingsForm(forms.ModelForm):
-    model = UserSettings
-    fields = ['phone', 'threshold_eta']
-    widgets = {
-            'phone': forms.TextInput(attrs={'placeholder': ('Phone')}),
-            'start': forms.TextInput(attrs={'type': 'range', 'min': '1', 'max': '10'}),
-        }
+    class Meta:
+        model = UserSettings
+        fields = ['phone', 'start']
+        widgets = {
+                'phone': forms.TextInput(attrs={'placeholder': ('Phone')}),
+                'start': forms.TextInput(attrs={'type': 'range', 'min': '1', 'max': '11', 'step': '1', 'value': '5', 'list': 'tickmarks'}),
+            }
