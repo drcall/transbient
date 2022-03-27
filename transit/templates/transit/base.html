@@ -22,9 +22,6 @@
                     <li class="nav-item active">
                         <a class="nav-link text-white" href="/transit">Current ETAs<span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="/transit/settings">Settings</a>
-                    </li>
                     </ul>
                     {% if user.is_authenticated %}
                         {% if user.socialaccount_set.all.0.get_avatar_url %}
