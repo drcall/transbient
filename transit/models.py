@@ -59,11 +59,12 @@ class UserSettings(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     phone = PhoneNumberField(null=False, blank=False)
     start = models.IntegerField(default=5)
+    fav_stop = models.ForeignKey(Stop,blank=True,on_delete=models.DO_NOTHING,default=4266820)
 
 class UserSettingsForm(forms.ModelForm):
     class Meta:
         model = UserSettings
-        fields = ['phone', 'start']
+        fields = ['phone', 'start','fav_stop']
         widgets = {
                 'phone': PhoneNumberPrefixWidget(attrs={'placeholder': ('Phone')}),
                 'start': forms.TextInput(attrs={'type': 'range', 'min': '1', 'max': '11', 'step': '1', 'value': '6', 'list': 'tickmarks'}),
