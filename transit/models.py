@@ -14,8 +14,8 @@ class Route(models.Model):
 class Stop(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=50)
-    long = models.IntegerField()
-    lat = models.IntegerField()
+    long = models.DecimalField(max_digits=17,decimal_places=15)
+    lat = models.DecimalField(max_digits=17,decimal_places=15)
     code = models.IntegerField()
     routes = models.ManyToManyField(Route)
 
@@ -25,8 +25,8 @@ class Stop(models.Model):
 class Vehicle(models.Model):
     id = models.IntegerField(primary_key=True)
     call_name = models.CharField(max_length=20)
-    long = models.IntegerField()
-    lat = models.IntegerField()
+    long = models.DecimalField(max_digits=17, decimal_places=15)
+    lat = models.DecimalField(max_digits=17, decimal_places=15)
     service_status = models.CharField(max_length=12)
     route_id = models.ForeignKey(Route,on_delete=models.DO_NOTHING)
 
