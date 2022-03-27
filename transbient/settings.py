@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'transbient.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-if 'test' in sys.argv or not 'HEROKU' in os.environ:
+if 'test' in sys.argv:
     DATABASES = {
         'default':{
             'ENGINE': 'django.db.backends.sqlite3',
