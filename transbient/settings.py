@@ -36,6 +36,15 @@ DEBUG = os.environ.get('DEBUG')
 
 ALLOWED_HOSTS = ['transbient.herokuapp.com', '127.0.0.1', 'localhost']
 
+TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID")
+TWILIO_AUTH_TOKEN = os.environ.get("TWILIO_AUTH_TOKEN")
+TWILIO_NUMBER = os.environ.get("TWILIO_NUMBER")
+SMS_BROADCAST_TO_NUMBERS = [ 
+    "", # use the format +19735551234
+    "", 
+    "", 
+]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -88,7 +97,7 @@ WSGI_APPLICATION = 'transbient.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-if 'test' in sys.argv:
+if 'test' in sys.argv or not 'HEROKU' in os.environ:
     DATABASES = {
         'default':{
             'ENGINE': 'django.db.backends.sqlite3',
