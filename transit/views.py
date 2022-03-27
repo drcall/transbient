@@ -1,6 +1,6 @@
 from django.shortcuts import render
 import requests, re, os
-from .models import UserSettings, UserSettingsForm
+from .models import UserSettings, UserSettingsForm, Route, Vehicle, Stop
 from django.http import HttpResponseRedirect
 from twilio.rest import Client
 from django.conf import settings
@@ -65,3 +65,16 @@ def change_settings(request):
         else:
             form = UserSettingsForm()
     return render(request, 'transit/settings.html', {'form': form, 'error_message': 'Something went wrong.'})
+
+
+def create_routes():
+    devhub_url = 'https://api.devhub.virginia.edu/v1/transit/routes'
+    devhub_data = {'success': False}
+
+    while not devhub_data['success']:
+        devhub_data = requests.get(devhub_url).json()
+
+    for route in devhub_data['routes']:
+        r = Route(id=route['id'], is_active=route['is_active'], long_name=route['long_name'],
+                  short_name=route['short_name'])
+        r.save()

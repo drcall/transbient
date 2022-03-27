@@ -8,6 +8,9 @@ class Route(models.Model):
     short_name = models.CharField(max_length=10)
     is_active = models.BooleanField(default=True)
 
+    def __str__(self):
+        return self.long_name
+
 class Stop(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=50)
@@ -16,6 +19,9 @@ class Stop(models.Model):
     code = models.IntegerField()
     routes = models.ManyToManyField(Route)
 
+    def __str__(self):
+        return self.code
+
 class Vehicle(models.Model):
     id = models.IntegerField(primary_key=True)
     call_name = models.CharField(max_length=20)
@@ -23,6 +29,9 @@ class Vehicle(models.Model):
     lat = models.IntegerField()
     service_status = models.CharField(max_length=12)
     route_id = models.ForeignKey(Route,on_delete=models.DO_NOTHING)
+
+    def __str__(self):
+        return self.call_name
 
 
 from django.conf import settings
