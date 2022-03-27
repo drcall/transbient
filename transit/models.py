@@ -8,6 +8,9 @@ class Route(models.Model):
     short_name = models.CharField(max_length=10)
     is_active = models.BooleanField(default=True)
 
+    def __str__(self):
+        return self.long_name
+
 class Stop(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=50)
@@ -15,6 +18,17 @@ class Stop(models.Model):
     lat = models.IntegerField()
     code = models.IntegerField()
     routes = models.ManyToManyField(Route)
+    route_str = models.TextField(default="No routes to display")
+
+    def __str__(self):
+        return str(self.code)
+    
+    def format_routes(self):
+        str = "Routes: "
+        for route in self.routes.all():
+            str += route.long_name.lower().title() + ", "
+
+        return str[:len(str)-2]
 
 class Vehicle(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -23,6 +37,9 @@ class Vehicle(models.Model):
     lat = models.IntegerField()
     service_status = models.CharField(max_length=12)
     route_id = models.ForeignKey(Route,on_delete=models.DO_NOTHING)
+
+    def __str__(self):
+        return self.call_name
 
 
 from django.conf import settings

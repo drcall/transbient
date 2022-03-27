@@ -4,23 +4,15 @@
 {% block content %}
 <div class = "content">
     <div class = "container-fluid mt-2" style = "min-height: 80vh;">
-        <div class = "row">
-            <div class="card mx-auto w-75">
-                <h5 class="card-header">Orange Line & McCormick Rd</h5>
-                <div class="card-body">
-                    <h5 class="card-title">Routes</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                </div>
-            </div>
-        </div>
         {% for stop in stops %}
-            <div class = "row">
+            <div class = "row py-2">
                 <div class="card mx-auto w-75">
-                    <h5 class="card-header">{{ stop.name }}/h5>
-                    <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <h5 class="card-header">{{ stop.name }} </h5>
+                    <div class="card-body d-flex">
+                        <p class="card-text w-75">{{ stop.route_str }}</p>
+                        <span class="w-25 text-right">
+                            <a href="#" class="btn btn-primary my-0 my-auto">Track</a>
+                        </span>
                     </div>
                 </div>
             </div>
