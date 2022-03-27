@@ -4,6 +4,7 @@ from .models import UserSettings, UserSettingsForm, Route, Vehicle, Stop
 from django.http import HttpResponseRedirect
 from twilio.rest import Client
 from django.conf import settings
+from decimal import Decimal
 
 def get_long_lat():
     dev_url = "https://www.googleapis.com/geolocation/v1/geolocate?"
@@ -96,9 +97,18 @@ def create_stops():
         devhub_data = requests.get(devhub_url).json()
 
     for stop in devhub_data['stops']:
-        s = Stop(id=stop['id'],name=stop['name'],lat=stop["position"][0],long=stop["position"][1],code=int(stop["code"]))
+        lat = Decimal("%.15f" % stop["position"][0])
+        long = Decimal("%.15f" % stop["position"][1])
+        s = Stop(id=stop['id'],name=stop['name'],lat=lat,long=long,code=int(stop["code"]))
         s.save()
 
     for route in devhub_data['routes']:
-        continue
+        r = Route.objects.filter(id=route['id'])[0]
+        for stop_id in route['stops']:
+            try:
+                s = Stop.objects.filter(id=stop_id)[0]
+                s.routes.add(r)
+            except IndexError:
+                continue
+
 
